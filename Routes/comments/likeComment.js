@@ -2,15 +2,16 @@ import Likes from "../../Services/Likes";
 
 export default async (req, res) => {
   try {
-    let { user } = req;
-    let { id, type } = req.params;
-    let likeService = new Likes(user);
+    let { user, params } = req;
+    let { id, type } = params;
+    let likesService = new Likes(user);
     let result = false;
     if (type === "like") {
-      result = await likeService.create({ id, type: "post" });
+      result = await likesService.create({ id, type: "comment" });
     } else if (type === "unlike") {
-      result = await likeService.delete({ id, type: "post" });
+      result = await likesService.delete({ id, type: "comment" });
     }
+
     if (result) {
       res.json({ status: "ok" }).status(200);
     } else {

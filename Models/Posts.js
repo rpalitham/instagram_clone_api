@@ -35,38 +35,35 @@ class Posts {
     });
   }
 
+  // attributes: {
+  //   include: [
+  //     [
+  //       sequelize.literal(
+  //         `(
+  //           SELECT COUNT(*)
+  //           FROM "LIKES"
+  //           WHERE
+  //               parent_id = "POSTS".id
+  //       )`
+  //       ),
+  //       "likesCount",
+  //     ],
+  //     [
+  //       sequelize.literal(
+  //         `(
+  //           SELECT COUNT(*)
+  //           FROM "COMMENTS"
+  //           WHERE
+  //               parent_id = "POSTS".id
+  //       )`
+  //       ),
+  //       "commentsCount",
+  //     ],
+  //   ],
+  // },
+
   async readAll(condition) {
-    // this.postsSchema.belongsTo(this.likeSchema, {
-    //   foreignKey: "id",
-    //   targetKey: "parent_id",
-    // });
     return await this.postsSchema.findAndCountAll({
-      attributes: {
-        include: [
-          [
-            sequelize.literal(
-              `(
-                SELECT COUNT(*)
-                FROM "LIKES"
-                WHERE
-                    parent_id = "POSTS".id
-            )`
-            ),
-            "likesCount",
-          ],
-          [
-            sequelize.literal(
-              `(
-                SELECT COUNT(*)
-                FROM "COMMENTS"
-                WHERE
-                    parent_id = "POSTS".id
-            )`
-            ),
-            "commentsCount",
-          ],
-        ],
-      },
       where: {
         ...condition,
       },
@@ -88,32 +85,6 @@ class Posts {
       targetKey: "id",
     });
     return await this.postsSchema.findAll({
-      attributes: {
-        include: [
-          [
-            sequelize.literal(
-              `(
-                SELECT COUNT(*)
-                FROM "LIKES"
-                WHERE
-                    parent_id = "POSTS".id
-            )`
-            ),
-            "likesCount",
-          ],
-          [
-            sequelize.literal(
-              `(
-                SELECT COUNT(*)
-                FROM "COMMENTS"
-                WHERE
-                    parent_id = "POSTS".id
-            )`
-            ),
-            "commentsCount",
-          ],
-        ],
-      },
       where: {
         [Op.or]: [
           { created_by: this.user.id },

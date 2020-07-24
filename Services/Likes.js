@@ -21,9 +21,9 @@ class LikesService {
     }
   }
 
-  async delete(id) {
+  async delete({ id, type }) {
     try {
-      let like = await this.likesModel.findOne({ id });
+      let like = await this.likesModel.findOne({ id, type });
       if (like) {
         await this.likesModel.delete({ id });
         return true;

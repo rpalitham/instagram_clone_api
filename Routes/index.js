@@ -16,7 +16,7 @@ router.use(verifyToken);
 router.use("/user", userDetails);
 router.use("/friendships", friendships);
 router.use("/post", posts);
-router.use("/like", likes);
+router.use("/likes", likes);
 router.use("/comment", comments);
 
 export default router;
