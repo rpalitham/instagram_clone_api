@@ -31,6 +31,15 @@ class Likes {
     });
   }
 
+  async countAll(condition) {
+    return await this.likesSchema.count({
+      where: {
+        ...condition,
+      },
+      raw: true,
+    });
+  }
+
   async delete(condition) {
     return await this.likesSchema.destroy({
       where: {

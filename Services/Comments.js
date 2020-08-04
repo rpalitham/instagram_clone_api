@@ -22,7 +22,23 @@ class CommentsService {
     }
   }
 
-  async delete(id) {
+  async get({ id, type }) {
+    try {
+      let obj = {
+        type,
+        parent_id: id,
+        user_id: this.user.id,
+      };
+      let userLiked = await this.likesModel.findOne(obj);
+      let likesCount = await this.likesModel.countAll({ type, parent_id: id });
+      userLiked = userLiked ? true : false;
+      return { userLiked, likesCount };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async delete({ id, commentId }) {
     try {
       let like = await this.commentsModel.findOne({ id });
       if (like) {

@@ -3,13 +3,13 @@ import Likes from "../../Services/Likes";
 export default async (req, res) => {
   try {
     let { user, params } = req;
-    let { id, type } = params;
+    let { commentId, type } = params;
     let likesService = new Likes(user);
     let result = false;
     if (type === "like") {
-      result = await likesService.create({ id, type: "comment" });
+      result = await likesService.create({ id: commentId, type: "comment" });
     } else if (type === "unlike") {
-      result = await likesService.delete({ id, type: "comment" });
+      result = await likesService.delete({ id: commentId, type: "comment" });
     }
 
     if (result) {

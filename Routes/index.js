@@ -17,6 +17,6 @@ router.use("/user", userDetails);
 router.use("/friendships", friendships);
 router.use("/post", posts);
 router.use("/likes", likes);
-router.use("/comment", comments);
+router.use("/comments", comments);
 
 export default router;
