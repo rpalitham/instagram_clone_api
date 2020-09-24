@@ -6,11 +6,11 @@ class CommentsService {
     this.user = { ...user };
   }
 
-  async create(payload) {
+  async create(id, payload) {
     try {
-      let { type, id, text } = payload;
+      let { text } = payload;
       let obj = {
-        type,
+        type: "post",
         text,
         parent_id: id,
         user_id: this.user.id,
@@ -22,18 +22,17 @@ class CommentsService {
     }
   }
 
-  async get({ id, type }) {
+  async get({ id, limit }) {
     try {
       let obj = {
-        type,
         parent_id: id,
         user_id: this.user.id,
       };
-      let userLiked = await this.likesModel.findOne(obj);
-      let likesCount = await this.likesModel.countAll({ type, parent_id: id });
-      userLiked = userLiked ? true : false;
-      return { userLiked, likesCount };
+      let comments = await this.commentsModel.readAll(obj, limit);
+      let commentsCount = await this.commentsModel.countAll({ parent_id: id });
+      return { comments, commentsCount };
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }

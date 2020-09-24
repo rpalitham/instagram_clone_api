@@ -3,8 +3,9 @@ import Comments from "../../Services/Comments";
 export default async (req, res) => {
   try {
     let { body, user } = req;
+    let { id } = req.params;
     let commentsService = new Comments(user);
-    let result = await commentsService.create(body);
+    let result = await commentsService.create(id, body);
     if (result) {
       res.json({ status: "ok" }).status(200);
     } else {
